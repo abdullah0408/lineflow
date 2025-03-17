@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/express": "^5.0.0",
+    "ai": "^4.1.61",
     "express": "^4.21.2"
   }
 }
