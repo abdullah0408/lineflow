@@ -28,12 +28,15 @@ const processTask = async (workerId: number, entity: "course" | "chapter" | "mod
     if (entity === "course") {
       const task = await courseWorker();
       if (!task) noTaskCount++;
+      console.log(noTaskCount)
     } else if (entity === "chapter") {
       const task = await chapterWorker();
       if (!task) noTaskCount++;
+      console.log(noTaskCount)
     } else {
       const task = await createChapterWorker();
       if (!task) noTaskCount++;
+      console.log(noTaskCount)
     }
   } catch (error) {
     console.error(`❌ Error processing ${entity} task.`, error);

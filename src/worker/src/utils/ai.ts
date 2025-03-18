@@ -2,13 +2,16 @@ import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
 import { courseSystemPrompt, chapterSystemPrompt } from "./promt";
 
-const model = google("models/gemini-2.0-flash-exp");
+const model = google("models/gemini-2.0-flash-thinking-exp-01-21");
 
 export const ai = async (userPrompt: string, taskOf: string): Promise<string | null> => {
   const systemPrompt = taskOf === "course" ? courseSystemPrompt : chapterSystemPrompt;
 try {
     const { textStream } = await streamText({
       model,
+      maxTokens: 65536,
+      temperature: 0.7,
+      maxRetries: 5,
       messages: [
         {
           role: "system",

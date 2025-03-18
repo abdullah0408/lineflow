@@ -2,14 +2,14 @@ import { fetchTask } from "../tasks/taskFetcher";
 import { processChapterTask } from "../tasks/taskProcessor";
 import { createChapterTask } from "../tasks/taskCreateChapter";
 
-export const chapterWorker = async (): Promise<void | null> => {
+export const chapterWorker = async (): Promise<boolean> => {
   const task = await fetchTask("chapter", "PENDING");
   if (!task) {
     console.log("ℹ️ No PENDING chapter tasks.");
-    return null;
+    return false;
   }
 
-  await processChapterTask(task.id, task.status);
+  return await processChapterTask(task.id, task.status);
 };
 
 export const createChapterWorker = async (): Promise<boolean> => {
