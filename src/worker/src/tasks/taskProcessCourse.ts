@@ -1,5 +1,5 @@
 import generateLayout from "../ai/generateLayout";
-import saveLayout from "./taskSave";
+import { saveLayout } from "./taskSave";
 import layoutValidator from "../validators/layoutValidator";
 import { type CourseLayout } from "../utils/types";
 

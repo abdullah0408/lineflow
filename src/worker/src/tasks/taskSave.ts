@@ -1,6 +1,6 @@
 import { prisma } from "../utils/prisma";
 
-const saveLayout = async (id: string, layout: string, chaptersCount: number): Promise<Boolean> => {
+export const saveLayout = async (id: string, layout: string, chaptersCount: number): Promise<Boolean> => {
     try {
         await prisma.course.update({
             where: { id },
@@ -14,4 +14,16 @@ const saveLayout = async (id: string, layout: string, chaptersCount: number): Pr
     }
 };
 
-export default saveLayout;
+export const saveChapter = async (id: string, content: string): Promise<Boolean> => {
+    try {
+        await prisma.chapter.update({
+            where: { id },
+            data: { content, status: "PROCESSING_CHAPTER_SUCCESS" },
+        })
+        console.log(`✅ Content saved for chapter ${id}`);
+        return true;
+    } catch (error) {
+        console.error(`❌ Error saving content for chapter ${id}: ${error}`);
+        return false;
+    }
+}

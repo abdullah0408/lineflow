@@ -1,18 +1,18 @@
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { courseSystemPrompt } from "./promt";
+import { courseSystemPrompt, chapterSystemPrompt } from "./promt";
 
 const model = google("models/gemini-2.0-flash-exp");
 
 export const ai = async (userPrompt: string, taskOf: string): Promise<string | null> => {
-
+  const systemPrompt = taskOf === "course" ? courseSystemPrompt : chapterSystemPrompt;
 try {
     const { textStream } = await streamText({
       model,
       messages: [
         {
           role: "system",
-          content: courseSystemPrompt
+          content: systemPrompt,
         },
         {
           role: "user",

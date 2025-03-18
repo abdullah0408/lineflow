@@ -53,7 +53,7 @@ export const runWorkers = async (): Promise<void> => {
 
   if (noTaskCount >= flag.length) {
     console.log("⏳ No tasks found. Waiting for 60 seconds before retrying...");
-    await delay(60000);
+    await delay(600);
     noTaskCount = 0;
   }
 
