@@ -33,11 +33,13 @@ const fetchTask = async (entity: EntityType): Promise<Task | null> => {
     return await prisma.course.findFirst({
       where: { status: "PENDING" },
       orderBy: { createdAt: "asc" },
+      select: { id: true, status: true },
     });
   } else if (entity === "chapter") {
     return await prisma.chapter.findFirst({
       where: { status: "PENDING" },
       orderBy: { createdAt: "asc" },
+      select: { id: true, status: true },
     });
   }
   return null;
@@ -93,8 +95,8 @@ export const runWorkers = async (): Promise<void> => {
   if (noTaskCount == flag.length) {
     console.log("⏳ No tasks found. Waiting for 60 seconds before retrying...");
     await delay(60000);
+    noTaskCount = 0; // Reset counter after waiting
   }
-  noTaskCount = 0; // Reset counter after waiting
 
   setImmediate(runWorkers);
 };
