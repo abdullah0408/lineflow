@@ -46,7 +46,7 @@ export const runWorkers = async (): Promise<void> => {
   await processTask(0, "course");
   await processTask(1, "chapter");
 
-  if (noTaskCount === flag.length) {
+  if (noTaskCount >= flag.length) {
     console.log("⏳ No tasks found. Waiting for 60 seconds before retrying...");
     await delay(60000);
     noTaskCount = 0;

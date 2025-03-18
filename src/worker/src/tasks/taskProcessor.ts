@@ -6,7 +6,7 @@ import processCourse from "../processes/processCourse";
  * @param id - Course task ID
  * @param status - Current status of the task
  */
-export const processCourseTask = async (id: string, status: string): Promise<void> => {
+export const processCourseTask = async (id: string, status: string): Promise<boolean> => {
   console.log(`🎓 Processing course task: ${id} with status ${status}`);
   // Update the course status to indicate it is being processed.
   const task = await prisma.course.update({
@@ -18,7 +18,7 @@ export const processCourseTask = async (id: string, status: string): Promise<voi
     console.log(
       `🚧 [INFO] Task of generating course layout for courseId:(${id}) is already picked by another instance.`
     );
-    return;
+    return false;
   }
   console.log(
     `📝 Task details - Title: ${task.title}, Description: ${task.description}, Difficulty: ${task.difficulty}`
@@ -27,6 +27,7 @@ export const processCourseTask = async (id: string, status: string): Promise<voi
   const e = await processCourse(id, task.title, task.description, task.difficulty);
   if (!e) console.log(`❌ Error processing course task ${id}`);
   else console.log(`✅ Course task ${id} completed.`);
+  return true;
 };
 
 /**
