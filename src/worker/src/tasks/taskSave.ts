@@ -1,6 +1,10 @@
 import { prisma } from "../utils/prisma";
 
-const saveLayout = async (id: string, layout: string): Promise<Boolean> => {
+const saveLayout = async (id: string, layout: string | null): Promise<Boolean> => {
+    if (!layout) {
+        console.error(`❌ Error saving layout for course ${id}: Layout is empty`);
+        return false;
+    }
     try {
         await prisma.course.update({
             where: { id },

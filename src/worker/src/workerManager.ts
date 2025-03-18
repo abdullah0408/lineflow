@@ -18,7 +18,7 @@ const processTask = async (workerId: number, entity: "course" | "chapter"): Prom
 
   while (flag[1 - workerId] === 1 && turn === 1 - workerId) {
     console.log(`⏳ Worker ${workerId + 1} waiting...`);
-    await new Promise((resolve) => workerLock.once(`worker${2 - workerId}_done`, resolve));
+    await new Promise<void>((resolve) => workerLock.once(`worker${2 - workerId}_done`, resolve));
   }
 
   console.log(`✅ Worker ${workerId + 1} is working on ${entity}`);
