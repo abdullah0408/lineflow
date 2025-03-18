@@ -7,6 +7,5 @@ export const courseWorker = async (): Promise<void | null> => {
     console.log("ℹ️ No PENDING course tasks.");
     return null;
   }
-
   await processCourseTask(task.id, task.status);
 };
