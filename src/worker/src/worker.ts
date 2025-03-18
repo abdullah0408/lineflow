@@ -46,6 +46,39 @@ const fetchTask = async (entity: EntityType): Promise<Task | null> => {
 };
 
 /**
+ * Function to process course task.
+ * @param id - Course task ID
+ * @param status - Current status of the task
+ */
+const processCourseTask = async (id: string, status: string): Promise<void> => {
+  console.log(`🎓 Processing course task: ${id} with status ${status}`);
+  // Implement your course task processing logic here
+  await prisma.course.update({
+    where: { id },
+    data: { status: "LAYOUT_SUCCESS" },
+  });
+  console.log(`✅ Course task ${id} completed.`);
+};
+
+/**
+ * Function to process chapter task.
+ * @param id - Chapter task ID
+ * @param status - Current status of the task
+ */
+const processChapterTask = async (
+  id: string,
+  status: string
+): Promise<void> => {
+  console.log(`📖 Processing chapter task: ${id} with status ${status}`);
+  // Implement your chapter task processing logic here
+  await prisma.chapter.update({
+    where: { id },
+    data: { status: "PROCESSING_CHAPTER_SUCCESS" },
+  });
+  console.log(`✅ Chapter task ${id} completed.`);
+};
+
+/**
  * Processes a pending task for a given worker.
  * @param workerId - Worker identifier (0 or 1)
  * @param entity - The entity to process ("course" or "chapter")
@@ -75,7 +108,13 @@ const processTask = async (
     } else {
       console.log(`📌 Processing ${entity} task: ${task.id}`);
       noTaskCount = 0; // Reset counter when a task is found
-      // Task processing logic here
+
+      // Call the appropriate function based on the entity type
+      if (entity === "course") {
+        await processCourseTask(task.id, task.status);
+      } else if (entity === "chapter") {
+        await processChapterTask(task.id, task.status);
+      }
     }
   } catch (error) {
     console.error(`❌ Error fetching PENDING ${entity} task.`, error);
