@@ -1,5 +1,4 @@
 import { ai } from "../utils/ai";
-import { prisma } from "../utils/prisma";
 const f = async (
     courseTitle: string,
     courseDescription: string | null,

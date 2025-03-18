@@ -1,5 +1,4 @@
 import { ai } from "../utils/ai";
-import { prisma } from "../utils/prisma";
 
 const f = async (title: string, description: string | null, difficulty: string | null): Promise<string | null> => {
     console.log(`📐 Generating layout for course: ${title}`);
