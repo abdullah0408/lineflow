@@ -33,24 +33,28 @@ export const createChapterTask = async (
     try {
         if (typeof task.layout === 'string') {
             const layout: CourseLayout = JSON.parse(task.layout);
-            for (let i = 0; i < layout.courseStructure.length; i++) {
-                await prisma.chapter.create({
-                    data: {
-                        courseId: id,
-                        courseTitle: task.title,
-                        courseDescription: task.description ? task.description : null,
-                        courseDifficulty: task.difficulty ? task.difficulty : null,
-                        title: layout.courseStructure[i].chapterTitle,
-                        description: layout.courseStructure[i].chapterDescription,
-                        status: "PENDING",
-                        chapterNumber: i + 1,
-                        layout: layout.courseStructure[i],
-                    }
+            await prisma.$transaction(async (tx) => {
+            
+                for (let i = 0; i < layout.courseStructure.length; i++) {
+                    await tx.chapter.create({
+                        data: {
+                            courseId: id,
+                            courseTitle: task.title,
+                            courseDescription: task.description || null,
+                            courseDifficulty: task.difficulty || null,
+                            title: layout.courseStructure[i].chapterTitle,
+                            description: layout.courseStructure[i].chapterDescription,
+                            status: "PENDING",
+                            chapterNumber: i + 1,
+                            layout: layout.courseStructure[i],
+                        },
+                    });
+                }
+            
+                await tx.course.update({
+                    where: { id },
+                    data: { status: "EXTRACTING_CHAPTERS_SUCCESS" },
                 });
-            }
-            await prisma.course.update({
-                where: { id },
-                data: { status: "EXTRACTING_CHAPTERS_SUCCESS" },
             });
             
         } else {
