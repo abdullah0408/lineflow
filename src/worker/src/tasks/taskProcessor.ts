@@ -1,5 +1,5 @@
 import { prisma } from "../utils/prisma";
-import processCourse from "../processes/processCourse";
+import processCourse from "./taskProcessCourse";
 
 /**
  * Function to process course task.
@@ -36,10 +36,10 @@ export const processCourseTask = async (id: string, status: string): Promise<boo
  * @param status - Current status of the task
  */
 export const processChapterTask = async (id: string, status: string): Promise<void> => {
-  console.log(`📖 Processing chapter task: ${id} with status ${status}`);
-  await prisma.chapter.update({
-    where: { id },
-    data: { status: "PROCESSING_CHAPTER_SUCCESS" },
-  });
-  console.log(`✅ Chapter task ${id} completed.`);
+  // console.log(`📖 Processing chapter task: ${id} with status ${status}`);
+  // await prisma.chapter.update({
+  //   where: { id },
+  //   data: { status: "PROCESSING_CHAPTER_SUCCESS" },
+  // });
+  // console.log(`✅ Chapter task ${id} completed.`);
 };

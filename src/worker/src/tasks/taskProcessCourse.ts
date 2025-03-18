@@ -1,5 +1,5 @@
 import generateLayout from "../ai/generateLayout";
-import saveLayout from "../tasks/taskSave";
+import saveLayout from "./taskSave";
 import layoutValidator from "../validators/layoutValidator";
 import { type CourseLayout } from "../utils/types";
 
@@ -36,7 +36,7 @@ const generateCourseLayout = async (
 
         const v = await layoutValidator(JSONlayout, id);
         if (v) {
-          const e = await saveLayout(id, layout);
+          const e = await saveLayout(id, layout, JSONlayout.courseStructure.length);
           if (e) return true;
         }
       }
