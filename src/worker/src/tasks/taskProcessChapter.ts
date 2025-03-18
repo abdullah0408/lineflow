@@ -28,7 +28,7 @@ const generateChapterContent = async (
         content = content.trim();
       if (content.length > 0) {
         if (content.startsWith("```markdown") && content.endsWith("```")) {
-            content = content.slice(7, -3).trim();
+            content = content.slice(11, -3).trim();
         }
           const e = await saveChapter(
             id,
