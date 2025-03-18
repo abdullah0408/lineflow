@@ -1,5 +1,7 @@
 import generateLayout from "../ai/generateLayout";
 import saveLayout from "../tasks/taskSave";
+import layoutValidator from "../validators/layoutValidator";
+import { type CourseLayout } from "../utils/types";
 
 /**
  * Fetches course details and generates a layout using AI.
@@ -16,11 +18,33 @@ const generateCourseLayout = async (
   difficulty: string | null
 ): Promise<boolean> => {
   if (id) {
-    const layout = await generateLayout(title, description, difficulty);
+    let layout = await generateLayout(title, description, difficulty);
     console.log(`Generated layout for course ${id}`);
-    const e = await saveLayout(id, layout);
-    if (e) return true;
+    if (layout) {
+      layout = layout.trim();
+      if (layout.length > 0) {
+        if (layout.startsWith("```json") && layout.endsWith("```")) {
+          layout = layout.slice(7, -3).trim();
+        }
+        if (!layout.startsWith("{") || !layout.endsWith("}")) {
+          console.log(
+            `❌ [ERROR] Invalid JSON format received from GEMINI for courseId: ${id}`
+          );
+          return false;
+        }
+        const JSONlayout: CourseLayout = JSON.parse(layout);
+
+        const v = await layoutValidator(JSONlayout, id);
+        if (v) {
+          const e = await saveLayout(id, layout);
+          if (e) return true;
+        }
+      }
+    }
+    console.error(`❌ Error saving layout for course ${id}: Layout is empty`);
+    return false;
   }
+  console.error(`❌ Error generating layout for course ${id}: ID is empty`);
   return false;
 };
 
