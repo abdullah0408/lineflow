@@ -3,13 +3,15 @@
   "module": "/src/server.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prisma": "^6.5.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.25",
+    "@prisma/client": "^6.5.0",
     "@types/express": "^5.0.0",
     "ai": "^4.1.61",
     "dotenv": "^16.4.7",
