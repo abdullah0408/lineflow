@@ -5,11 +5,12 @@ const f = async (
     courseDifficulty: string | null,
     title: string,
     description: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     layout: any // Change type to `any` to avoid unnecessary parsing
   ): Promise<string | null> => {
     console.log(`🎓 Creating Chapter Content: ${title}`);
   
-    let prompt =
+    const prompt =
       `Generate comprehensive chapter content for:` +
       `\nCourse Title: ${courseTitle}` +
       (courseDescription ? `\nCourse Description: ${courseDescription}` : "") +
@@ -24,6 +25,7 @@ const f = async (
       `\n[3-5 core concepts with explanations]` +
       `\n\n${layout.topicsCovered
         .map(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (topic: any) =>
             `\n### ${topic.topicTitle}
   ${topic.topicDescription}

@@ -6,7 +6,7 @@ import { delay } from "./utils/delay";
 
 // Worker synchronization variables
 const workerLock = new EventEmitter();
-let flag: [number, number, number] = [0, 0, 0];
+const flag: [number, number, number] = [0, 0, 0];
 let turn = 0;
 let noTaskCount = 0;
 

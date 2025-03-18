@@ -1,7 +1,4 @@
-import generateLayout from "../ai/generateLayout";
 import { saveChapter } from "./taskSave";
-import layoutValidator from "../validators/layoutValidator";
-import { type CourseLayout } from "../utils/types";
 import generateContent from "../ai/generateContent";
 /**
  * Fetches course details and generates a layout using AI.
@@ -18,6 +15,7 @@ const generateChapterContent = async (
   courseDifficulty: string | null,
   title: string,
   description: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   layout: any
 ): Promise<boolean> => {
   if (id && courseTitle && title && description && layout) {

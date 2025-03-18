@@ -1,6 +1,6 @@
 import { prisma } from "../utils/prisma";
 
-export const saveLayout = async (id: string, layout: string, chaptersCount: number): Promise<Boolean> => {
+export const saveLayout = async (id: string, layout: string, chaptersCount: number): Promise<boolean> => {
     try {
         await prisma.course.update({
             where: { id },
@@ -14,7 +14,7 @@ export const saveLayout = async (id: string, layout: string, chaptersCount: numb
     }
 };
 
-export const saveChapter = async (id: string, content: string): Promise<Boolean> => {
+export const saveChapter = async (id: string, content: string): Promise<boolean> => {
     try {
         await prisma.chapter.update({
             where: { id },
