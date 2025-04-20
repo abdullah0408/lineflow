@@ -1,3 +1,6 @@
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+
 // import { AuthProvider } from "@/context/AuthContext";
 export default function MainLayout({
   children,
@@ -5,10 +8,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <AuthProvider>
-      <div className="h-screen w-screen m-0 p-0 flex flex-col">
-          {children}
-      </div>
-    // </AuthProvider>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
