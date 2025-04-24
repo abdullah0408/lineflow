@@ -1,17 +1,9 @@
-// app/chapters/[chapterId]/page.tsx (or similar path)
-
-"use server";
+// src/app/(main)/chapters/[chapterId]/page.tsx
 
 import { prisma } from "@/lib/prisma";
 import ReactMarkdown from "react-markdown";
 
-interface PageProps {
-  params: {
-    chapterId: string;
-  };
-}
-
-const Page = async ({ params }: PageProps) => {
+const Page = async ({ params }: { params: { chapterId: string } }) => {
   const { chapterId } = params;
 
   const chapter = await prisma.chapter.findUnique({
@@ -28,8 +20,6 @@ const Page = async ({ params }: PageProps) => {
     <div className="container mx-auto p-4 sm:p-6 lg:p-8 prose dark:prose-invert">
       <h1 className="text-3xl font-bold mb-4">{chapter.title}</h1>
       <p className="text-muted-foreground mb-6">{chapter.description}</p>
-
-      {/* Render Markdown Content */}
       <ReactMarkdown>{chapter.content || ""}</ReactMarkdown>
     </div>
   );
