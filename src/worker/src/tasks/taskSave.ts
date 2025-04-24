@@ -4,7 +4,7 @@ export const saveLayout = async (id: string, layout: string, chaptersCount: numb
     try {
         await prisma.course.update({
             where: { id },
-            data: { layout, status: "LAYOUT_SUCCESS", numberOfChapters: chaptersCount },
+            data: { layout, status: "LAYOUT_APPROVED", numberOfChapters: chaptersCount },
         })
         console.log(`✅ Layout saved for course ${id}`);
         return true;
