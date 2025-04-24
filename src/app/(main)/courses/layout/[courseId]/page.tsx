@@ -1,18 +1,17 @@
 "use server";
+
 import { ChapterCard } from '@/components/ChapterCard';
 import { prisma } from '@/lib/prisma';
 import React from 'react';
 // import { Button } from '@/components/ui/button';
 import ApproveLayoutButton from '@/components/ApproveLayoutButton';
 
-interface PageProps {
-  params: {
-    courseId: string;
-  };
+interface PageParams {
+  courseId: string;
 }
 
-const Page = async ({ params }: PageProps) => {
-  const { courseId } = params;
+const Page = async ({ params }: { params: Promise<PageParams> }) => {
+  const { courseId } = await params;
 
   // Fetch course details
   const course = await prisma.course.findUnique({
@@ -51,37 +50,6 @@ const Page = async ({ params }: PageProps) => {
   console.log("Chapters:", chapters);
   console.log("Course ID:", courseId);
 
-  // let buttonText = "";
-  // let buttonLink = "";
-  // let isDisabled = true;
-
-  // switch (course?.status) {
-  //   case "PENDING":
-  //     buttonText = "In Queue";
-  //     break;
-  //   case "LAYOUT_FAILED":
-  //   case "EXTRACTING_CHAPTERS_FAILED":
-  //   case "PROCESSING_CHAPTERS_FAILED":
-  //     buttonText = "Failed";
-  //     break;
-  //   case "LAYOUT_APPROVED":
-  //   case "LAYOUT_SUCCESS":
-  //   case "EXTRACTING_CHAPTERS":
-  //   case "EXTRACTING_CHAPTERS_SUCCESS":
-  //   case "PROCESSING_CHAPTERS":
-  //     buttonText = "Check Layout";
-  //     buttonLink = `/courses/layout/${courseId}`;
-  //     isDisabled = false;
-  //     break;
-  //   case "PROCESSING_CHAPTERS_SUCCESS":
-  //     buttonText = "Ready";
-  //     buttonLink = `/courses/publish/${courseId}`;
-  //     isDisabled = false;
-  //     break;
-  //   default:
-  //     buttonText = course?.status?.replace(/_/g, " ") || "Unknown Status";
-  // }
-
   return (
     <div className="w-full p-6">
       {/* Course Details */}
@@ -109,13 +77,6 @@ const Page = async ({ params }: PageProps) => {
           <ApproveLayoutButton courseId={courseId} />
         </div>
       )}
-
-      {/* Status Button */}
-      {/* <div className="mt-6">
-        <Button asChild disabled={isDisabled}>
-          <a href={buttonLink}>{buttonText}</a>
-        </Button>
-      </div> */}
     </div>
   );
 };
